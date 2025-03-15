@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Holtwood+One+SC' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script|Herr+Von+Muellerhoff' rel='stylesheet'
+        type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Istok+Web|Roboto+Condensed:700' rel='stylesheet'
+        type='text/css'>
+    <link href="style.css" rel='stylesheet'
+        type='text/css'>    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <div class="header">Matthew's March Madness Mania</div>
+    <section id="bracket">
+        <div class="container">
+            <div class="split split-one">
+                <div class="round round-one current">
+                    <div class="round-details">First Round<br /></div>
+                    <ul class="matchup" id="E1">
+                        <li class="team team-top">Duke<span class="score"></span></li>
+                        <li class="team team-bottom">American<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E2">
+                        <li class="team team-top">Mississippi St.<span class="score"></span></li>
+                        <li class="team team-bottom">Creighton<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E3">
+                        <li class="team team-top">BYU<span class="score"></span></li>
+                        <li class="team team-bottom">Liberty<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E4">
+                        <li class="team team-top">Maryland<span class="score"></span></li>
+                        <li class="team team-bottom">High Point<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E5">
+                        <li class="team team-top">Michigan<span class="score"></span></li>
+                        <li class="team team-bottom">VCU<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E6">
+                        <li class="team team-top">Iowa St.<span class="score"></span></li>
+                        <li class="team team-bottom">Troy<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E7">
+                        <li class="team team-top">Gonzaga<span class="score"></span></li>
+                        <li class="team team-bottom">Oklahoma<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E8">
+                        <li class="team team-top">Tennessee<span class="score"></span></li>
+                        <li class="team team-bottom">Robert Morris<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W1">
+                        <li class="team team-top">Florida<span class="score"></span></li>
+                        <li class="team team-bottom">Norfolk St.<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W2">
+                        <li class="team team-top">Connecticut<span class="score"></span></li>
+                        <li class="team team-bottom">New Mexico<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W3">
+                        <li class="team team-top">Arizona<span class="score"></span></li>
+                        <li class="team team-bottom">Xavier<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W4">
+                        <li class="team team-top">Wisconsin<span class="score"></span></li>
+                        <li class="team team-bottom">Lipscomb<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W5">
+                        <li class="team team-top">UCLA<span class="score"></span></li>
+                        <li class="team team-bottom">Drake<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W6">
+                        <li class="team team-top">Kentucky<span class="score"></span></li>
+                        <li class="team team-bottom">Montana<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W7">
+                        <li class="team team-top">St. Mary's<span class="score"></span></li>
+                        <li class="team team-bottom">Vanderbilt<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W8">
+                        <li class="team team-top">Texas Tech<span class="score"></span></li>
+                        <li class="team team-bottom">Nebraska Omaha<span class="score"></span></li>
+                    </ul>
+                    
+                </div> <!-- END ROUND ONE -->
+
+                <div class="round round-two">
+                    <div class="round-details">Second Round<br /></div>
+                    <ul class="matchup" id="E9">
+                        <li class="team team-top current" id="winner-E1"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-E2"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E10">
+                        <li class="team team-top" id="winner-E3"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-E4"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E11">
+                        <li class="team team-top" id="winner-E5"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-E6"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E12">
+                        <li class="team team-top" id="winner-E7"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-E8"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W9">
+                        <li class="team team-top" id="winner-W1"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-W2"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W10">
+                        <li class="team team-top" id="winner-W3"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-W4"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W11">
+                        <li class="team team-top" id="winner-W5"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-W6"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W12">
+                        <li class="team team-top" id="winner-W7"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-W8"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div> <!-- END ROUND TWO -->
+
+                <div class="round round-three">
+                    <div class="round-details">Sweet Sixteen<br /></div>
+                    <ul class="matchup" id="E13">
+                        <li class="team team-top" id="winner-E9"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom"  id="winner-E10"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="E14">
+                        <li class="team team-top" id="winner-E11"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-E12"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W13">
+                        <li class="team team-top" id="winner-W9"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom"  id="winner-W10"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W14">
+                        <li class="team team-top" id="winner-W11"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-W12"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div> <!-- END ROUND THREE -->
+                <div class="round round-four">
+                    <div class="round-details">Elite Eight<br /></div>
+                    <ul class="matchup" id="E15">
+                        <li class="team team-top" id="winner-E13"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom"  id="winner-E14"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="W15">
+                        <li class="team team-top" id="winner-W13"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-W14"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div> <!-- END ROUND FOUR -->
+            </div>
+
+            <div class="champion">
+                <div class="semis-l">
+                    <div class="round-details">Final Four <br />
+                    </div>
+                    <ul class="matchup championship" id="F1">
+                        <li class="team team-top" id="winner-E15"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-W15"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div>
+                <div class="final">
+                    <div class="round-details">championship <br /></div>
+                    <ul class="matchup championship" id="F3">
+                        <li class="team team-top" id="winner-F1"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-F2"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div>
+                <div class="semis-r">
+                    <ul class="matchup championship" id="F2">
+                        <li class="team team-top" id="winner-M15"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-S15"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="split split-two">
+                <div class="round round-four">
+                    <div class="round-details">Elite Eight<br /></div>
+                    <ul class="matchup" id="M15">
+                        <li class="team team-top" id="winner-M13"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom"  id="winner-M14"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S15">
+                        <li class="team team-top" id="winner-S13"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-S14"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div> <!-- END ROUND FOUR -->
+
+                <div class="round round-three">
+                    <div class="round-details">Sweet Sixteen<br /></div>
+                    <ul class="matchup" id="M13">
+                        <li class="team team-top" id="winner-M9"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom"  id="winner-M10"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M14">
+                        <li class="team team-top" id="winner-M11"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-M12"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S13">
+                        <li class="team team-top" id="winner-S9"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom"  id="winner-S10"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S14">
+                        <li class="team team-top" id="winner-S11"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-S12"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div> <!-- END ROUND THREE -->
+
+                <div class="round round-two">
+                    <div class="round-details">Second Round<br /></div>
+                    <ul class="matchup" id="M9">
+                        <li class="team team-top" id="winner-M1"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-M2"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M10">
+                        <li class="team team-top" id="winner-M3"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-M4"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M11">
+                        <li class="team team-top" id="winner-M5"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-M6"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M12">
+                        <li class="team team-top" id="winner-M7"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-M8"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S9">
+                        <li class="team team-top" id="winner-S1"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-S2"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S10">
+                        <li class="team team-top" id="winner-S3"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-S4"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S11">
+                        <li class="team team-top" id="winner-S5"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-S6"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S12">
+                        <li class="team team-top" id="winner-S7"><span class="team-name"></span><span class="score"></span></li>
+                        <li class="team team-bottom" id="winner-S8"><span class="team-name"></span><span class="score"></span></li>
+                    </ul>
+                </div> <!-- END ROUND TWO -->
+                <div class="round round-one current">
+                    <div class="round-details">First Round<br /></div>
+                    <ul class="matchup" id="M1">
+                        <li class="team team-top">Houston<span class="score"></span></li>
+                        <li class="team team-bottom">Quinnipiac<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M2">
+                        <li class="team team-top">Memphis<span class="score"></span></li>
+                        <li class="team team-bottom">Georgia<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M3">
+                        <li class="team team-top">Missisippi<span class="score"></span></li>
+                        <li class="team team-bottom">McNeese St.<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M4">
+                        <li class="team team-top">Purdue<span class="score"></span></li>
+                        <li class="team team-bottom">Yale<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M5">
+                        <li class="team team-top">Illinois<span class="score"></span></li>
+                        <li class="team team-bottom">West Virginia<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M6">
+                        <li class="team team-top">St. John's<span class="score"></span></li>
+                        <li class="team team-bottom">UNC Wilmington<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M7">
+                        <li class="team team-top">Louisville<span class="score"></span></li>
+                        <li class="team team-bottom">Arkansas<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="M8">
+                        <li class="team team-top">Alabama<span class="score"></span></li>
+                        <li class="team team-bottom">Wofford<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S1">
+                        <li class="team team-top">Auburn<span class="score"></span></li>
+                        <li class="team team-bottom">SIU Edwardsville<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S2">
+                        <li class="team team-top">Marquette<span class="score"></span></li>
+                        <li class="team team-bottom">Baylor<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S3">
+                        <li class="team team-top">Oregon<span class="score"></span></li>
+                        <li class="team team-bottom">UC San Diego<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S4">
+                        <li class="team team-top">Clemson<span class="score"></span></li>
+                        <li class="team team-bottom">Akron<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S5">
+                        <li class="team team-top">Kansas<span class="score"></span></li>
+                        <li class="team team-bottom">San Diego St.<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S6">
+                        <li class="team team-top">Texas A&M<span class="score"></span></li>
+                        <li class="team team-bottom">Utah Valley<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S7">
+                        <li class="team team-top">Missouri<span class="score"></span></li>
+                        <li class="team team-bottom">Utah St.<span class="score"></span></li>
+                    </ul>
+                    <ul class="matchup" id="S8">
+                        <li class="team team-top">Michigan St.<span class="score"></span></li>
+                        <li class="team team-bottom">Bryant<span class="score"></span></li>
+                    </ul>
+                </div> <!-- END ROUND ONE -->
+            </div>
+        </div>
+    </section>
+    <script src="main.js"></script>
+
+</body>
