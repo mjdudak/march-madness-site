@@ -25,27 +25,37 @@ app.get('/', function(req, res) {
 app.use(express.static('public'));
 app.use(express.json());
 
+app.get('/round-one-probs', async (req, res) => {
+    const sqlStatement =   `SELECT 
+    Winner,
+    (CAST(COUNT(*) AS REAL) / SUM(COUNT(*)) OVER (PARTITION BY GameName)) AS pct
+    FROM prediction_brackets
+    WHERE Round=64
+    GROUP BY GameName, Winner;`
+    const resp = await execute(db, sqlStatement);
+    console.log(resp);
+    res.json(resp);
+});
+
 app.post('/get-probs', async (req, res) => {
-    const teams_so_far = req.body.teams_so_far;
-    let brackets_select = [];
-    for (g in teams_so_far) {
-        if (teams_so_far[g].trim().length===0) {
+    const teamsSoFar = req.body.teamsSoFar;
+    let bracketsSelect = [];
+    for (g in teamsSoFar) {
+        if (teamsSoFar[g].trim().length===0) {
             continue;
         }
-        brackets_select.push(`SELECT bracket FROM prediction_brackets
-            WHERE GameName="${g}" AND Winner="${teams_so_far[g]}"
+        bracketsSelect.push(`SELECT bracket FROM prediction_brackets
+            WHERE GameName="${g}" AND Winner="${teamsSoFar[g]}"
             `);
     }
-    const bracket_select_statement = brackets_select.join(" INTERSECT ");
-    const sql_statement = `
-    SELECT Winner, CAST(COUNT(*) as REAL)/sum(COUNT(*)) OVER() pct FROM prediction_brackets 
-    WHERE GameName="${req.body.probabilities_round}" AND bracket IN (${bracket_select_statement})
+    const bracketSelectStatement = bracketsSelect.join(" INTERSECT ");
+    const sqlStatement = `
+    SELECT Winner, COUNT(Winner) as count, CAST(COUNT(*) as REAL)/sum(COUNT(*)) OVER() pct FROM prediction_brackets 
+    WHERE GameName="${req.body.probabilitiesRound}" AND bracket IN (${bracketSelectStatement})
     GROUP BY Winner ORDER BY pct DESC;`
-    console.log(sql_statement)
-    let resp = await execute(db, sql_statement)
-    console.log(resp);
+    let resp = await execute(db, sqlStatement);
     res.json({
-        'probabilities_round': req.body.probabilities_round,
+        'probabilitiesRound': req.body.probabilitiesRound,
         'probabilities': resp
     });
 });

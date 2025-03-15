@@ -1,4 +1,4 @@
-game_relationships = {
+gameRelationships = {
     'E9': ['E1', 'E2'],
     'E10': ['E3', 'E4'],
     'E11': ['E5', 'E6'],
@@ -34,11 +34,11 @@ game_relationships = {
 
 function getTeams(matchup) {
     let teams = {}
-    let games_to_check = game_relationships[matchup]
-    if (games_to_check === undefined) {
+    let gamesToCheck = gameRelationships[matchup]
+    if (gamesToCheck === undefined) {
         return {}
     }
-    for (g of games_to_check) {
+    for (g of gamesToCheck) {
         let team = document.getElementById("winner-" + g).childNodes[0].textContent;
         if (team != "") {
             teams[g] = team
@@ -50,40 +50,78 @@ function getTeams(matchup) {
     return teams
 }
 
-const redo_probabilities = function(body_response) {
-    const matchup = document.getElementById(body_response.probabilities_round);
+function getGamesUpstream(matchup) {
+    let newGame = Object.entries(gameRelationships).map((el) => {
+        if (el[1].includes(matchup)) {
+            const winnerElement = document.getElementById("winner-"+matchup).textContent;
+            if (winnerElement.trim().length>0){
+                return el[0];
+            }
+            return el[0];
+        }
+    }).find((el) => (el!=undefined));
+    if (newGame!=undefined) {
+        let gamesToCheck = [newGame];
+        const addGames = getGamesUpstream(newGame);
+        gamesToCheck = gamesToCheck.concat(addGames);
+        return gamesToCheck;
+    }
+    else {
+        return []
+    }
+    
+}
+
+
+const redoProbabilities = function(bodyResponse) {
+    const matchup = document.getElementById(bodyResponse.probabilitiesRound);
     for (t of matchup.getElementsByClassName("team")) {
-        const this_team = body_response.probabilities.filter((el) => {
+        const thisTeam = bodyResponse.probabilities.filter((el) => {
             return el['Winner']==t.childNodes[0].textContent;
         });
-        if (this_team.length>0){
-            const prob = this_team[0].pct;
+        if (thisTeam.length>0){
+            const prob = thisTeam[0].pct;
             t.getElementsByClassName("score")[0].textContent = `${(prob*100).toPrecision(2)}%`;
         }
     }
 }
 
+const changeProbabilities = async function(teamsSoFar, probabilitiesRound) {
+    let jsonBody = {
+        'probabilitiesRound': probabilitiesRound,
+        'teamsSoFar': teamsSoFar
+    }
+    const response = await fetch("http://localhost:3000/get-probs", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(jsonBody)
+    });
+    const bodyResponse = await response.json();
+    redoProbabilities(bodyResponse);
+}
 
 const advanceTeam = async function(target) {
-    const this_team = target.childNodes[0].textContent;
-    const matchup_id = target.parentNode.id;
-    const game_number = parseInt(matchup_id.substring(1));
-    const to_move_into = document.getElementById("winner-" + matchup_id)
-    if (to_move_into.textContent.trim()!="" && to_move_into.childNodes[0].textContent != this_team) {
-        const other_team = [...target.parentNode.childNodes].filter((el) => {
+    const thisTeam = target.childNodes[0].textContent;
+    const matchupId = target.parentNode.id;
+    const gameNumber = parseInt(matchupId.substring(1));
+    const toMoveInto = document.getElementById("winner-" + matchupId)
+    if (toMoveInto.textContent.trim()!="" && toMoveInto.childNodes[0].textContent != thisTeam) {
+        const otherTeam = [...target.parentNode.childNodes].find((el) => {
             if (el.childNodes.length > 0) {
-                return el.childNodes[0].textContent != this_team;
+                return el.childNodes[0].textContent != thisTeam;
             }
             return false;
-        })[0].childNodes[0].textContent;
+        }).childNodes[0].textContent;
         [...document.getElementsByClassName("team-set")].forEach((el) => {
-            if (el.childNodes[0].textContent == other_team) {
-                const test_game = el.parentNode.id;
-                let test_game_num = parseInt(el.parentNode.id.substring(1));
-                if (test_game.substring(0,1)=="F") {
-                    test_game_num = test_game_num + 15;
+            if (el.childNodes[0].textContent == otherTeam) {
+                const testGame = el.parentNode.id;
+                let testGameNum = parseInt(el.parentNode.id.substring(1));
+                if (testGame.substring(0,1)=="F") {
+                    testGameNum = testGameNum + 15;
                 }
-                if (test_game_num > game_number) {
+                if (testGameNum > gameNumber) {
                     el.childNodes[0].textContent = "";
                     el.childNodes[1].textContent = "";
                     el.classList.remove('team-set', 'picked');
@@ -91,28 +129,20 @@ const advanceTeam = async function(target) {
             }
         })
     }
-    to_move_into.childNodes[0].textContent = this_team
+    toMoveInto.childNodes[0].textContent = thisTeam;
     for (child of target.parentNode.querySelectorAll('li.team')) {
-        child.classList.remove('picked')
+        child.classList.remove('picked');
     }
-    target.classList.add('picked')
-    to_move_into.classList.add('team-set')
-    let probabilities_round = to_move_into.parentNode.id
-    let teams_so_far = getTeams(probabilities_round)
-    let json_body = {
-        'this_team': this_team,
-        'probabilities_round': probabilities_round,
-        'teams_so_far': teams_so_far
-    }
-    const response = await fetch("http://localhost:3000/get-probs", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(json_body)
-    })
-    const body_response = await response.json();
-    redo_probabilities(body_response);
+    target.classList.add('picked');
+    toMoveInto.classList.add('team-set');
+    let probabilitiesRound = toMoveInto.parentNode.id
+    let teamsSoFar = getTeams(probabilitiesRound)
+    changeProbabilities(teamsSoFar, probabilitiesRound, thisTeam);
+    const upstreamGames = getGamesUpstream(probabilitiesRound);
+    upstreamGames.forEach((match) => {
+        teamsSoFar = getTeams(match);
+        changeProbabilities(teamsSoFar, match);
+    });
 }
 
 const bubbleUpClick = async function(ev) {
@@ -127,3 +157,18 @@ const bubbleUpClick = async function(ev) {
 for (t of document.querySelectorAll(".team")) {
     t.addEventListener("click", (ev) => bubbleUpClick(ev))
 }
+
+const loadRoundOne = async function() {
+    const response = await fetch("http://localhost:3000/round-one-probs");
+    const bodyResponse = await response.json();
+    const roundOneTeams = document.getElementsByClassName("team");
+    [...roundOneTeams].forEach((el) => {
+        const teamName = el.childNodes[0].textContent;
+        if (teamName.trim().length != 0) {
+            const prob = bodyResponse.find((el) => el.Winner==teamName).pct;
+            el.childNodes[1].textContent = `${(prob*100).toPrecision(2)}%`
+        }
+    })
+}
+
+loadRoundOne()
