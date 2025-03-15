@@ -1,4 +1,4 @@
-gameRelationships = {
+const gameRelationships = {
     'E9': ['E1', 'E2'],
     'E10': ['E3', 'E4'],
     'E11': ['E5', 'E6'],
@@ -31,6 +31,8 @@ gameRelationships = {
     'F2': ['M15', 'S15'],
     'F3': ['F1', 'F2']
 }
+
+const url_base = window.location.origin;
 
 function getTeams(matchup) {
     let teams = {}
@@ -91,7 +93,7 @@ const changeProbabilities = async function(teamsSoFar, probabilitiesRound) {
         'probabilitiesRound': probabilitiesRound,
         'teamsSoFar': teamsSoFar
     }
-    const response = await fetch("http://localhost:3000/get-probs", {
+    const response = await fetch(`${url_base}/get-probs`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -105,6 +107,13 @@ const changeProbabilities = async function(teamsSoFar, probabilitiesRound) {
 const advanceTeam = async function(target) {
     const thisTeam = target.childNodes[0].textContent;
     const matchupId = target.parentNode.id;
+    if (matchupId=="F3") {
+        for (child of target.parentNode.querySelectorAll('li.team')) {
+            child.classList.remove('picked');
+        }
+        target.classList.add('picked');
+        return;        
+    }
     const gameNumber = parseInt(matchupId.substring(1));
     const toMoveInto = document.getElementById("winner-" + matchupId)
     if (toMoveInto.textContent.trim()!="" && toMoveInto.childNodes[0].textContent != thisTeam) {
@@ -159,7 +168,7 @@ for (t of document.querySelectorAll(".team")) {
 }
 
 const loadRoundOne = async function() {
-    const response = await fetch("http://localhost:3000/round-one-probs");
+    const response = await fetch(`${url_base}/round-one-probs`);
     const bodyResponse = await response.json();
     const roundOneTeams = document.getElementsByClassName("team");
     [...roundOneTeams].forEach((el) => {
