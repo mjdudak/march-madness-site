@@ -64,35 +64,38 @@ const redo_probabilities = function(body_response) {
 }
 
 
-const advanceTeam = async function(event) {
-    let this_team = event.target.childNodes[0].textContent
-    let matchup_id = event.target.parentNode.id
-    let to_move_into = document.getElementById("winner-" + matchup_id)
+const advanceTeam = async function(target) {
+    const this_team = target.childNodes[0].textContent;
+    const matchup_id = target.parentNode.id;
+    const game_number = parseInt(matchup_id.substring(1));
+    const to_move_into = document.getElementById("winner-" + matchup_id)
     if (to_move_into.textContent.trim()!="" && to_move_into.childNodes[0].textContent != this_team) {
-        let more_to_go = true;
-        let next_to_remove = to_move_into;
-        let team_to_remove = event.target.parentNode.querySelectorAll('li.team').filter((el) => {
-            // DO THIS
+        const other_team = [...target.parentNode.childNodes].filter((el) => {
+            if (el.childNodes.length > 0) {
+                return el.childNodes[0].textContent != this_team;
+            }
+            return false;
+        })[0].childNodes[0].textContent;
+        [...document.getElementsByClassName("team-set")].forEach((el) => {
+            if (el.childNodes[0].textContent == other_team) {
+                const test_game = el.parentNode.id;
+                let test_game_num = parseInt(el.parentNode.id.substring(1));
+                if (test_game.substring(0,1)=="F") {
+                    test_game_num = test_game_num + 15;
+                }
+                if (test_game_num > game_number) {
+                    el.childNodes[0].textContent = "";
+                    el.childNodes[1].textContent = "";
+                    el.classList.remove('team-set', 'picked');
+                }
+            }
         })
-        next_to_remove.classList.remove('picked')
-        while (more_to_go) {
-            let match_id = next_to_remove.parentNode.id;
-            next_to_remove = document.getElementById("winner-"+match_id)
-            console.log(next_to_remove)
-            if (next_to_remove==null){
-                more_to_go = false;
-            }
-            else {
-                next_to_remove.childNodes[0].textContent = " "
-                next_to_remove.classList.remove('picked', 'team-set')
-            }
-        }
     }
     to_move_into.childNodes[0].textContent = this_team
-    for (child of event.target.parentNode.querySelectorAll('li.team')) {
+    for (child of target.parentNode.querySelectorAll('li.team')) {
         child.classList.remove('picked')
     }
-    event.target.classList.add('picked')
+    target.classList.add('picked')
     to_move_into.classList.add('team-set')
     let probabilities_round = to_move_into.parentNode.id
     let teams_so_far = getTeams(probabilities_round)
@@ -112,6 +115,15 @@ const advanceTeam = async function(event) {
     redo_probabilities(body_response);
 }
 
+const bubbleUpClick = async function(ev) {
+    if (ev.target.tagName=="LI") {
+        await advanceTeam(ev.target);
+    }
+    else {
+        await advanceTeam(ev.target.parentNode);
+    }
+}
+
 for (t of document.querySelectorAll(".team")) {
-    t.addEventListener("click", (ev) => advanceTeam(ev))
+    t.addEventListener("click", (ev) => bubbleUpClick(ev))
 }
