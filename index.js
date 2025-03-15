@@ -33,7 +33,6 @@ app.get('/round-one-probs', async (req, res) => {
     WHERE Round=64
     GROUP BY GameName, Winner;`
     const resp = await execute(db, sqlStatement);
-    console.log(resp);
     res.json(resp);
 });
 
