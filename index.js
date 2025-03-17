@@ -59,6 +59,17 @@ app.post('/get-probs', async (req, res) => {
     });
 });
 
+app.get('/round-by-round-probs', async (req, res) => {
+    const sqlStatement = `
+    SELECT Winner, Round, 
+    (CAST(COUNT(*) AS REAL))/(SELECT COUNT(DISTINCT bracket) FROM prediction_brackets) AS pct 
+    FROM prediction_brackets 
+    GROUP BY Winner, Round 
+    ORDER BY Round ASC, pct DESC;`
+    const resp = await execute(db, sqlStatement);
+    res.json(resp);
+})
+
 app.listen(PORT, () => {
     console.log("Server Listening on PORT:", PORT);
   });

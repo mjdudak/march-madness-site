@@ -27,10 +27,12 @@ const gameRelationships = {
     'S13': ['S9', 'S10'],
     'S14': ['S11', 'S12'],
     'S15': ['S13', 'S14'],
-    'F1': ['E15', 'W15'],
-    'F2': ['M15', 'S15'],
+    'F1': ['S15', 'W15'],
+    'F2': ['E15', 'M15'],
     'F3': ['F1', 'F2']
 }
+
+const numberOfBrackets = 100000;
 
 const url_base = window.location.origin;
 
@@ -55,11 +57,11 @@ function getTeams(matchup) {
 function getGamesUpstream(matchup) {
     let newGame = Object.entries(gameRelationships).map((el) => {
         if (el[1].includes(matchup)) {
-            const winnerElement = document.getElementById("winner-"+matchup).textContent;
+            const winnerElement = document.getElementById(el[0]).textContent;
             if (winnerElement.trim().length>0){
                 return el[0];
             }
-            return el[0];
+            return undefined;
         }
     }).find((el) => (el!=undefined));
     if (newGame!=undefined) {
@@ -78,12 +80,17 @@ function getGamesUpstream(matchup) {
 const redoProbabilities = function(bodyResponse) {
     const matchup = document.getElementById(bodyResponse.probabilitiesRound);
     for (t of matchup.getElementsByClassName("team")) {
-        const thisTeam = bodyResponse.probabilities.filter((el) => {
+        const thisTeam = bodyResponse.probabilities.find((el) => {
             return el['Winner']==t.childNodes[0].textContent;
         });
-        if (thisTeam.length>0){
-            const prob = thisTeam[0].pct;
-            t.getElementsByClassName("score")[0].textContent = `${(prob*100).toPrecision(2)}%`;
+        if (thisTeam!=undefined){
+            if (thisTeam.count/numberOfBrackets < 0.001) {
+                t.getElementsByClassName("score")[0].textContent = `\u2757`;
+            }
+            else {
+                const prob = thisTeam.pct;
+                t.getElementsByClassName("score")[0].textContent = `${(prob*100).toPrecision(2)}%`;
+            }
         }
     }
 }
@@ -180,4 +187,26 @@ const loadRoundOne = async function() {
     })
 }
 
+const loadTeamProbs = async function() {
+    const response = await fetch(`${url_base}/round-by-round-probs`);
+    const teamProbs = await response.json();
+    const tableBody = document.getElementById("round-probs-body");
+    const templateRow = document.querySelector("#team-row");
+    const templateCell = document.querySelector("#team-cell");
+    const teamsSet = new Set(teamProbs.map((el) => el.Winner));
+    const teams = [...teamsSet];
+    teams.forEach((t) => {
+        const thisTeamProbs = teamProbs.filter((el) => el.Winner==t);
+        const probsByRound = thisTeamProbs.sort((a, b) => b.Round - a.Round).map((el) => el.pct);
+        const cloneRow = templateRow.content.cloneNode(true);
+        let tds = cloneRow.querySelectorAll("td");
+        tds[0].textContent = t;
+        probsByRound.forEach((p, i) => {
+            tds[i+1].textContent = `${(p*100).toPrecision(2)}%`;
+        });
+        tableBody.appendChild(cloneRow);
+    });
+}
+
 loadRoundOne()
+loadTeamProbs()

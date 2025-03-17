@@ -76,61 +76,11 @@
 }
 
 body {
-    font-family: 'Istok Web', sans-serif;
     background-size: cover;
     min-height: 100%;
     margin: 0;
 }
 
-.hero {
-    position: relative;
-    text-align: center;
-    overflow: hidden;
-    color: #fcfcfc;
-}
-
-.hero h1 {
-    font-family: 'Holtwood One SC', serif;
-    font-weight: normal;
-    font-size: 5.4em;
-    margin: 0 0 20px;
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    letter-spacing: -1px;
-}
-
-.hero p {
-    font-family: 'Abel', sans-serif;
-    text-transform: uppercase;
-    color: #5CCA87;
-    letter-spacing: 6px;
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
-    font-size: 1.2em;
-}
-
-.hero-wrap {
-    padding: 3.5em 10px;
-}
-
-.hero p.intro {
-    font-family: 'Holtwood One SC', serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 3em;
-    margin-bottom: -40px;
-}
-
-.hero p.year {
-    color: #fff;
-    letter-spacing: 20px;
-    font-size: 34px;
-    margin: -25px 0 25px;
-}
-
-.hero p.year i {
-    font-size: 14px;
-    vertical-align: middle;
-}
 
 #bracket {
     overflow: hidden;
@@ -202,7 +152,6 @@ body {
     width: 30.8333%\9;
 }
 
-.split-two {}
 
 .split-one .round {
     margin: 0 2.5% 0 0;
@@ -262,7 +211,6 @@ body {
 }
 
 .round-details {
-    font-family: 'Roboto Condensed', sans-serif;
     font-size: 13px;
     color: #2C7399;
     text-transform: uppercase;
@@ -492,3 +440,35 @@ li::marker {
     }
 
 }
+
+.probs-table {
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 3em;
+    
+}
+
+th {
+    border-left: 1px solid;
+    border-right: 1px solid;
+    padding: 0.35em;
+}
+
+thead {
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    background-color: #cbcbcb;
+}
+
+td {
+    padding: 0.25em;
+    border-left: 1px solid;
+    border-right: 1px solid;
+}
+
+.team-row > td {
+    border-bottom: 1px solid #cbcbcb;
+}
+tbody > tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
