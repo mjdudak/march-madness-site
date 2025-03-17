@@ -7,6 +7,8 @@ RUN apk update && apk upgrade && \
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+ADD https://files.mjd.ax/brackets.sqlite
+
 COPY ./package.json /usr/src/app/
 RUN npm install --production && npm cache clean --force
 COPY ./ /usr/src/app
