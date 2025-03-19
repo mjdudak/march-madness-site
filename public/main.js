@@ -175,7 +175,7 @@ for (t of document.querySelectorAll(".team")) {
 }
 
 const loadRoundOne = async function() {
-    const response = await fetch(`${url_base}/round-one-probs`);
+    const response = await fetch(`${url_base}/round-one-probs.json`);
     const bodyResponse = await response.json();
     const roundOneTeams = document.getElementsByClassName("team");
     [...roundOneTeams].forEach((el) => {
@@ -188,7 +188,7 @@ const loadRoundOne = async function() {
 }
 
 const loadTeamProbs = async function() {
-    const response = await fetch(`${url_base}/round-by-round-probs`);
+    const response = await fetch(`${url_base}/round-by-round-probs.json`);
     const teamProbs = await response.json();
     const tableBody = document.getElementById("round-probs-body");
     const templateRow = document.querySelector("#team-row");
