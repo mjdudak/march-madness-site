@@ -43,15 +43,16 @@ app.post('/get-probs', async (req, res) => {
         if (teamsSoFar[g].trim().length===0) {
             continue;
         }
-        bracketsSelect.push(`SELECT bracket FROM prediction_brackets
-            WHERE GameName="${g}" AND Winner="${teamsSoFar[g]}"
-            `);
+        bracketsSelect.push(`${g}="${teamsSoFar[g]}"`);
     }
-    const bracketSelectStatement = bracketsSelect.join(" INTERSECT ");
+    const bracketSelectStatement = bracketsSelect.join(" AND ");
     const sqlStatement = `
-    SELECT Winner, COUNT(Winner) as count, CAST(COUNT(*) as REAL)/sum(COUNT(*)) OVER() pct FROM prediction_brackets 
-    WHERE GameName="${req.body.probabilitiesRound}" AND bracket IN (${bracketSelectStatement})
-    GROUP BY Winner ORDER BY pct DESC;`
+    SELECT ${req.body.probabilitiesRound} as Winner, 
+    COUNT(${req.body.probabilitiesRound}) as count, 
+    CAST(COUNT(*) as REAL)/sum(COUNT(*)) OVER() pct 
+    FROM prediction_brackets_wide
+    WHERE ${bracketSelectStatement}
+    GROUP BY ${req.body.probabilitiesRound} ORDER BY pct DESC;`
     let resp = await execute(db, sqlStatement);
     res.json({
         'probabilitiesRound': req.body.probabilitiesRound,
